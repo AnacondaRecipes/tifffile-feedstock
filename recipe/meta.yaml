@@ -14,10 +14,12 @@ build:
 
 requirements:
   build:
+    - {{ compiler('c') }}
+  host:
     - python
-    - setuptools
+    - pip
+    - setuptools_scm
     - numpy
-    - msinttypes  # [win and py<35]
   run:
     - python
     - {{ pin_compatible('numpy') }}
