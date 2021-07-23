@@ -24,6 +24,8 @@ requirements:
   host:
     - python >=3.7
     - pip
+    - setuptools
+    - wheel
   run:
     - python >=3.7
     - numpy >=1.15.1
@@ -32,6 +34,10 @@ requirements:
 test:
   imports:
     - tifffile
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
   home: https://github.com/cgohlke/tifffile
@@ -39,6 +45,8 @@ about:
   license_family: BSD
   license_file: LICENSE
   summary: Read and write image data from and to TIFF files.
+  doc_url: https://github.com/cgohlke/tifffile/blob/master/README.rst
+  dev_url: https://github.com/cgohlke/tifffile
 
 extra:
   recipe-maintainers:
