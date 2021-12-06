@@ -32,7 +32,7 @@ requirements:
     - python >=3.7
     - numpy >=1.15.1
     # Extras require:
-    - imagecodecs >=2021.4.28
+    - imagecodecs >=2021.7.30
 
 test:
   imports:
