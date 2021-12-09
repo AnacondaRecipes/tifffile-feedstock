@@ -1,6 +1,6 @@
 {% set name = "tifffile" %}
-{% set version = "2021.7.2" %}
-{% set sha256 = "17fc5ca901f7d7b827a16e4695668e6120319324efe6d1333258397d8a71dedb" %}
+{% set version = "2021.11.2" %}
+{% set sha256 = "153e31fa1d892f482fabb2ae9f2561fa429ee42d01a6f67e58cee13637d9285b" %}
 
 package:
   name: {{ name|lower }}
@@ -11,7 +11,9 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 2
+  number: 0
+  # there is a missing dependency for s390x imagecodecs version >=2021.4.28 
+  skip: True  # [py<37 or s390x]
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
   entry_points:
@@ -22,7 +24,7 @@ build:
 
 requirements:
   host:
-    - python >=3.7
+    - python
     - pip
     - setuptools
     - wheel
@@ -30,12 +32,13 @@ requirements:
     - python >=3.7
     - numpy >=1.15.1
     # Extras require:
-    - imagecodecs >=2021.4.28
+    - imagecodecs >=2021.7.30
 
 test:
   imports:
     - tifffile
   requires:
+    - python <3.10
     - pip
   commands:
     - pip check
