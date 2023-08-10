@@ -1,6 +1,6 @@
 {% set name = "tifffile" %}
-{% set version = "2021.11.2" %}
-{% set sha256 = "153e31fa1d892f482fabb2ae9f2561fa429ee42d01a6f67e58cee13637d9285b" %}
+{% set version = "2023.4.12" %}
+{% set sha256 = "2fa99f9890caab919d932a0acaa9d0f5843dc2ef3594e212963932e20713badd" %}
 
 package:
   name: {{ name|lower }}
@@ -13,9 +13,8 @@ source:
 build:
   number: 0
   # there is a missing dependency for s390x imagecodecs version >=2021.4.28 
-  skip: True  # [py<37 or s390x]
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: True  # [py<39]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation
   entry_points:
     - tifffile = tifffile:main
     - tiffcomment = tifffile.tiffcomment:main
@@ -29,10 +28,12 @@ requirements:
     - setuptools
     - wheel
   run:
-    - python >=3.7
-    - numpy >=1.15.1
+    - python
+    - numpy >=1.19.2
     # Extras require:
-    - imagecodecs >=2021.7.30
+    - imagecodecs >=2023.1.23
+  run_constrained:
+    - matplotlib-base >=3.3
 
 test:
   imports:
@@ -48,6 +49,8 @@ about:
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE
+  description: |
+      Tifffile is a Python library to store NumPy arrays in TIFF (Tagged Image File Format) files, and read image and metadata from TIFF-like files used in bioimaging.
   summary: Read and write image data from and to TIFF files.
   doc_url: https://github.com/cgohlke/tifffile/blob/master/README.rst
   dev_url: https://github.com/cgohlke/tifffile
