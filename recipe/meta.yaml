@@ -13,7 +13,7 @@ source:
 build:
   number: 0
   # there is a missing dependency for s390x imagecodecs version >=2021.4.28 
-  skip: True  # [py<39]
+  skip: True  # [py<38]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation
   entry_points:
     - tifffile = tifffile:main
