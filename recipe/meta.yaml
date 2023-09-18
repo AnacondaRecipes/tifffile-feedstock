@@ -38,7 +38,6 @@ test:
   imports:
     - tifffile
   requires:
-    - python <3.10
     - pip
   commands:
     - pip check
