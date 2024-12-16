@@ -1,6 +1,5 @@
 {% set name = "tifffile" %}
-{% set version = "2023.4.12" %}
-{% set sha256 = "2fa99f9890caab919d932a0acaa9d0f5843dc2ef3594e212963932e20713badd" %}
+{% set version = "2024.12.12" %}
 
 package:
   name: {{ name|lower }}
@@ -8,11 +7,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: c38e929bf74c04b6c8708d87f16b32c85c6d7c2514b99559ea3db8003ba4edda
 
 build:
   number: 0
-  skip: True  # [py<38]
+  skip: True  # [py<310]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation
   entry_points:
     - tifffile = tifffile:main
@@ -28,11 +27,12 @@ requirements:
     - wheel
   run:
     - python
-    - numpy >=1.19.2
-    # Extras require:
-    - imagecodecs >=2023.1.23
+    - numpy
   run_constrained:
     - matplotlib-base >=3.3
+    # imagecodecs shouldn't be used in run as it will become a circular dependency
+    - imagecodecs >=2023.8.12 # extra:codecs
+    - zarr <3 # extra:zarr
 
 test:
   imports:
@@ -41,6 +41,8 @@ test:
     - pip
   commands:
     - pip check
+    - tifffile --help
+    - tiff2fsspec --help
 
 about:
   home: https://github.com/cgohlke/tifffile
