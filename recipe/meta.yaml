@@ -31,7 +31,7 @@ requirements:
   run_constrained:
     - matplotlib-base >=3.10
     # imagecodecs shouldn't be used in run as it will become a circular dependency
-    - imagecodecs >=2023.8.12 # extra:codecs
+    - imagecodecs >=2024.12.30 # extra:codecs
     - zarr <3 # extra:zarr
 
 test:
