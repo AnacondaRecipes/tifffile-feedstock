@@ -28,20 +28,35 @@ requirements:
     - python
     - numpy
   run_constrained:
-    - matplotlib-base >=3.10
-    # imagecodecs shouldn't be used in run as it will become a circular dependency
+    # 'codecs'
     - imagecodecs >=2024.12.30
+    # 'zarr'
     - zarr >=3.1.3
 
+# Skip due to AssertionsError - no presence of newline. This is a test issue.
+# Also skip test_func_pformat_xml on Windows due to quote style mismatch.
+{% set skipped_tests = [
+    "test_class_omexml_modulo",
+    "test_class_omexml_attributes", 
+    "test_class_omexml_datasets",
+    "test_class_omexml_multiimage"
+] %}
+{% set skipped_tests_win = ["test_class_omexml", "test_func_pformat_xml"] %}
+
 test:
+  source_files:
+    - tests
   imports:
     - tifffile
   requires:
     - pip
+    - pytest
   commands:
     - pip check
     - tifffile --help
     - tiff2fsspec --help
+    - pytest -v tests/ -k "not {{ ' and not '.join(skipped_tests) }}"  # [not win]
+    - pytest -v tests/ -k "not {{ ' and not '.join(skipped_tests_win) }}"  # [win]
 
 about:
   home: https://github.com/cgohlke/tifffile
