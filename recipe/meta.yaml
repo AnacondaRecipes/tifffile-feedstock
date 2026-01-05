@@ -1,15 +1,5 @@
 {% set name = "tifffile" %}
 {% set version = "2025.12.12" %}
-{% set skipped_tests = [
-  "test_class_omexml_modulo",
-  "test_class_omexml_attributes",
-  "test_class_omexml_datasets",
-  "test_class_omexml_multiimage"
-] %}
-{% set skipped_tests_win = [
-  "test_class_omexml",
-  "test_func_pformat_xml"
-] %}
 
 package:
   name: {{ name|lower }}
@@ -45,6 +35,16 @@ requirements:
 
 # Skip due to AssertionsError - no presence of newline. This is a test issue.
 # Also skip test_func_pformat_xml on Windows due to quote style mismatch.
+{% set skipped_tests = [
+  "test_class_omexml_modulo",
+  "test_class_omexml_attributes",
+  "test_class_omexml_datasets",
+  "test_class_omexml_multiimage"
+] %}
+{% set skipped_tests_win = [
+  "test_class_omexml",
+  "test_func_pformat_xml"
+] %}
 test:
   source_files:
     - tests
