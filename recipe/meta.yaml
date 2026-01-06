@@ -1,5 +1,15 @@
 {% set name = "tifffile" %}
-{% set version = "2025.12.12" %}
+{% set version = "2025.12.20" %}
+{% set skipped_tests = [
+  "test_class_omexml_modulo",
+  "test_class_omexml_attributes",
+  "test_class_omexml_datasets",
+  "test_class_omexml_multiimage"
+] %}
+{% set skipped_tests_win = [
+  "test_class_omexml",
+  "test_func_pformat_xml"
+] %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +17,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 97e11fd6b1d8dc971896a098c841d9cd4e6eb958ac040dd6fb8b332c3f7288b6
+  sha256: cb8a4fee327d15b3e3eeac80bbdd8a53b323c80473330bcfb99418ee4c1c827f
 
 build:
   number: 0
@@ -35,16 +45,6 @@ requirements:
 
 # Skip due to AssertionsError - no presence of newline. This is a test issue.
 # Also skip test_func_pformat_xml on Windows due to quote style mismatch.
-{% set skipped_tests = [
-  "test_class_omexml_modulo",
-  "test_class_omexml_attributes",
-  "test_class_omexml_datasets",
-  "test_class_omexml_multiimage"
-] %}
-{% set skipped_tests_win = [
-  "test_class_omexml",
-  "test_func_pformat_xml"
-] %}
 test:
   source_files:
     - tests
