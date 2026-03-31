@@ -11,6 +11,8 @@
   "test_func_pformat_xml"
 ] %}
 
+# Skip due to AssertionsError - no presence of newline. This is a test issue.
+# Also skip test_func_pformat_xml on Windows due to quote style mismatch.
 package:
   name: {{ name|lower }}
   version: {{ version }}
@@ -43,8 +45,6 @@ requirements:
     # 'zarr'
     - zarr >=3.1.5
 
-# Skip due to AssertionsError - no presence of newline. This is a test issue.
-# Also skip test_func_pformat_xml on Windows due to quote style mismatch.
 test:
   source_files:
     - tests
