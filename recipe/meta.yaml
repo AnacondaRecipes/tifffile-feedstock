@@ -1,27 +1,17 @@
 {% set name = "tifffile" %}
-{% set version = "2026.3.3" %}
-{% set skipped_tests = [
-  "test_class_omexml_modulo",
-  "test_class_omexml_attributes",
-  "test_class_omexml_datasets",
-  "test_class_omexml_multiimage"
-] %}
-{% set skipped_tests_win = [
-  "test_class_omexml",
-  "test_func_pformat_xml"
-] %}
+{% set version = "2026.6.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: d9a1266bed6f2ee1dd0abde2018a38b4f8b2935cb843df381d70ac4eac5458b7
+  sha256: 626c892c0e899d959b9438e7c0e1491dc154a7fead1f1f37a991724a50eceba9
 
 build:
   number: 0
-  skip: true  # [py<311]
+  skip: true  # [py<312]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation
   entry_points:
     - tifffile = tifffile:main
@@ -33,18 +23,30 @@ requirements:
   host:
     - python
     - pip
+    - wheel
     - setuptools
   run:
     - python
-    - numpy
+    - numpy >=2.1
   run_constrained:
-    # 'codecs'
-    - imagecodecs >=2025.11.11
-    # 'zarr'
-    - zarr >=3.1.5
+    # codecs
+    - imagecodecs >=2026.5.10
+    # zarr
+    - zarr >=3.2.0
 
 # Skip due to AssertionsError - no presence of newline. This is a test issue.
 # Also skip test_func_pformat_xml on Windows due to quote style mismatch.
+{% set skipped_tests = [
+  "test_class_omexml_modulo",
+  "test_class_omexml_attributes",
+  "test_class_omexml_datasets",
+  "test_class_omexml_multiimage"
+] %}
+{% set skipped_tests_win = [
+  "test_class_omexml",
+  "test_func_pformat_xml"
+] %}
+
 test:
   source_files:
     - tests
