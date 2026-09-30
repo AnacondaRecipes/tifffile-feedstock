@@ -1,5 +1,5 @@
 {% set name = "tifffile" %}
-{% set version = "2026.7.31" %}
+{% set version = "2026.9.20" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 79b1f4b1aba3ef3e6b6f1691a32abb62f5d7383faa52a12771c695232ba40bee
+  sha256: 30e145a7042ce7143ae50a50fe8b7221b0070aae22adab8f9e79a264be6b5cdc
 
 build:
   number: 0
@@ -29,9 +29,9 @@ requirements:
     - numpy >=2.1
   run_constrained:
     # codecs
-    - imagecodecs >=2026.5.10
+    - imagecodecs >=2026.8.16
     # zarr
-    - zarr >=3.2.0
+    - zarr >=3.3.0
 
 # Skip due to AssertionsError - no presence of newline. This is a test issue.
 # Also skip test_func_pformat_xml on Windows due to quote style mismatch.
