@@ -1,5 +1,5 @@
 {% set name = "tifffile" %}
-{% set version = "2026.9.20" %}
+{% set version = "2026.10.15" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 30e145a7042ce7143ae50a50fe8b7221b0070aae22adab8f9e79a264be6b5cdc
+  sha256: a5ee666dbd6d62e059830a3450825a2521a981b3f45c07a80ab009484aef56f0
 
 build:
   number: 0
@@ -46,6 +46,14 @@ requirements:
   "test_func_pformat_xml"
 ] %}
 
+{% set disabled_tests = " test_class_omexml_modulo" %}  # [not win]
+{% set disabled_tests = disabled_tests + " or test_class_omexml_attributes" %} # [not win]
+{% set disabled_tests = disabled_tests + " or test_class_omexml_datasets" %}  # [not win]
+{% set disabled_tests = disabled_tests + " or test_class_omexml_multiimage" %}  # [not win]
+
+{% set disabled_tests = " test_class_omexml" %}  # [win]
+{% set disabled_tests = disabled_tests + " or test_func_pformat_xml" %}  # [win]
+
 test:
   source_files:
     - tests
@@ -58,8 +66,7 @@ test:
     - pip check
     - tifffile --help
     - tiff2fsspec --help
-    - pytest -v tests/ -k "not {{ ' and not '.join(skipped_tests) }}"  # [not win]
-    - pytest -v tests/ -k "not {{ ' and not '.join(skipped_tests_win) }}"  # [win]
+    - pytest -vv tests -k "not ({{disabled_tests}})"
 
 about:
   home: https://github.com/cgohlke/tifffile
